@@ -1,5 +1,7 @@
 import 'dart:ffi';
 
+import 'package:bar_graph/flutter_package_test_1.dart';
+import 'package:bar_graph/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +12,7 @@ TextEditingController controller1 = TextEditingController();
 TextEditingController controller2 = TextEditingController();
 TextEditingController genderCont = TextEditingController();
 TextEditingController ageCont = TextEditingController();
+List<GraphModel> graphModelList = [];
 String height = "0";
 int weight = 0;
 String output = "0";
@@ -102,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    
+    largestValue = 0;
     
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -131,6 +134,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
       currentIndex: currentPageIndex,
       onTap: (a) {
+      // graphModelList.add(GraphModel(dateData: dateData, valueData: valueData, colorData: colorData));
+      
+      // for(var item in graphModelList)
+      // {
+      //    var itemValue = item.valueData;
+      //     if(itemValue > largestValue)
+      //     {
+      //         setState((){
+      //             largestValue = itemValue;
+      //         });
+      //     }
+      // }
       
         setState(() {
           currentPageIndex = a;
@@ -206,13 +221,13 @@ class _BMICalculatorState extends State<BMICalculator> {
             children: <Widget>[
              
             
-              Text("Height",style: TextStyle(color: Colors.white)),
+              Text("Height",style: TextStyle(color: Colors.white,fontSize: 20)),
               Container(
                height: 55,
                 decoration: BoxDecoration(
                   border: Border.all(width: 2, color: Colors.white24),
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.black12
+                  color: Colors.black38
                   ),
                 child: TextField(
                   
@@ -249,17 +264,17 @@ class _BMICalculatorState extends State<BMICalculator> {
                   //  keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(border: InputBorder.none,hintText:userHeight,
-                   hintStyle: TextStyle(color: Colors.white),  ),
+                   hintStyle: TextStyle(color: Colors.white,fontSize: 18),  ),
                   ),
               ),
-              Text("Weight",style: TextStyle(color: Colors.white)),
+              Text("Weight",style: TextStyle(color: Colors.white,fontSize: 20)),
              Container(
               height: 54,
                margin: EdgeInsets.only(top: 5,bottom: 10),
                 decoration: BoxDecoration(
                   border: Border.all(width: 2, color: Colors.white24),
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.black12
+                  color: Colors.black38
                   ),
                 child: TextField(
                   style: TextStyle(color: Colors.white),
@@ -278,7 +293,8 @@ class _BMICalculatorState extends State<BMICalculator> {
                   },
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
-                  decoration: InputDecoration(border: InputBorder.none, hintText: userWeight,hintStyle: TextStyle(color: Colors.white))),
+                  decoration: InputDecoration(border: InputBorder.none, hintText: userWeight,
+                  hintStyle: TextStyle(color: Colors.white,fontSize: 18))),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -286,7 +302,7 @@ class _BMICalculatorState extends State<BMICalculator> {
                   Container(
 
                   width: 150,
-   decoration: BoxDecoration(border: Border.all(width: 1,color: Colors.white30),borderRadius: BorderRadius.circular(20),color: Colors.black12),
+   decoration: BoxDecoration(border: Border.all(width: 1,color: Colors.white30),borderRadius: BorderRadius.circular(20),color: Colors.black38),
                   child: TextField(style:TextStyle(color: Colors.white),controller:genderCont, onChanged:(g)  {
                     g = g.toLowerCase();
                     if(g == "m" || g == "male" || g == "boy" || g == "lalaki"){
@@ -299,15 +315,15 @@ class _BMICalculatorState extends State<BMICalculator> {
                       return;
                     }
                     
-                  },decoration: InputDecoration(hintText: "gender",hintStyle: TextStyle(color: Colors.white), border: InputBorder.none,), textAlign: TextAlign.center),
+                  },decoration: InputDecoration(hintText: "gender",hintStyle: TextStyle(color: Colors.white,fontSize: 18), border: InputBorder.none,), textAlign: TextAlign.center),
                
                 ),
                 Container(
                   width: 150,
-                  decoration: BoxDecoration(border: Border.all(width: 1,color: Colors.white30),borderRadius: BorderRadius.circular(20),color: Colors.black12),
+                  decoration: BoxDecoration(border: Border.all(width: 1,color: Colors.white30),borderRadius: BorderRadius.circular(20),color: Colors.black38),
                   child: TextField(keyboardType:TextInputType.number,style:TextStyle(color: Colors.white), controller:ageCont,onChanged: (a){
                     age = a == "" || age.isNaN || age.toString().contains(',') || age.toString().contains('.')  ? 0:int.parse(a);
-                  } ,decoration: InputDecoration(hintText: "age",hintStyle: TextStyle(color: Colors.white),border: InputBorder.none), textAlign: TextAlign.center,),
+                  } ,decoration: InputDecoration(hintText: "age",hintStyle: TextStyle(color: Colors.white,fontSize: 18),border: InputBorder.none), textAlign: TextAlign.center,),
                 )],
               ),
               Container(
@@ -316,7 +332,7 @@ class _BMICalculatorState extends State<BMICalculator> {
                 padding: EdgeInsets.fromLTRB(20,20,20,20),
                 
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), 
-                color: Colors.green.shade300,),
+                color: Colors.deepPurple,),
                 child: GestureDetector(onTap: (){
                    String inputText = controller1.text.trim();
   if(inputText.isEmpty){
@@ -403,11 +419,11 @@ class _BMICalculatorState extends State<BMICalculator> {
                       }
                     }
                 });
-                }, child: Text("Compute",style: TextStyle(color: Colors.black87)),),
+                }, child: Text("Compute",style: TextStyle(color: Colors.white)),),
               ),
               Container(
                 decoration:BoxDecoration(borderRadius: BorderRadius.circular(30), 
-                color: Colors.green.shade300,)
+                color: Colors.green.shade400,)
                  
               ),
             SizedBox(height: 10,),
@@ -491,7 +507,7 @@ class _BMICalculatorState extends State<BMICalculator> {
                 
                      Container(
                        child: Row(mainAxisSize: MainAxisSize.max, mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                                 AnimatedContainer(decoration:BoxDecoration(border: Border.all(width: 1,color: Colors.white38),color: Colors.black12),  duration: Duration(seconds: 5), curve: Curves.bounceIn, height: 200,width:170, padding: EdgeInsets.all(10), child: AnimatedContainer(duration: Duration(seconds: 5),child:bodyType),),
+                                 AnimatedContainer(decoration:BoxDecoration(border: Border.all(width: 1,color: Colors.white38),color: Colors.black38),  duration: Duration(seconds: 5), curve: Curves.bounceIn, height: 200,width:170, padding: EdgeInsets.all(10), child: AnimatedContainer(duration: Duration(seconds: 5),child:bodyType),),
                                  Row(
                                    
                                    children: [
@@ -562,6 +578,54 @@ class _CalorieCalculatorState extends State<CalorieCalculator> {
             Colors.black45,
           ],
         ),),
+        child: Column(children: [
+          Container(width: size.width,
+          child: BarGraph(graphData: graphModelList, largestValue: largestValue, backgroundColor: Colors.black38, textColor: Colors.white, graphHeight: 200),)
+        ,
+        SizedBox(
+          width: size.width*0.9,
+          child: Flex(direction: Axis.horizontal, mainAxisSize: MainAxisSize.max,  children: [
+            Container(width: 220,
+            height: 350,
+            decoration: BoxDecoration(border: Border.all(width: 1,color: Colors.white24)),
+              child: Flex(direction: Axis.vertical, mainAxisSize: MainAxisSize.max,  children: [
+                Container(
+                  width: 250,
+                    decoration: BoxDecoration(border: Border.all(width: 1,color: Colors.white24),color: Colors.black38),
+                  child: TextField( style: TextStyle(color: Colors.white24,  ),
+                   decoration:InputDecoration(hintText: "Enter product",
+                    hintStyle: TextStyle(color: Colors.white,fontSize: 21,)), 
+                    textAlign: TextAlign.center,
+                    cursorColor: Colors.deepPurple,
+
+                  ),
+                ),
+                Container(width: 250,height: 298,decoration: BoxDecoration(border: Border.all(width: 1,color: Colors.white24),color: Colors.black38),)
+              ],),
+            ),
+            Container(width: 210,height: 350,decoration: BoxDecoration(border: Border.all(width: 1,color: Colors.white24),color:Colors.black38)
+            ,child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.start, children: [Text("Product:  \n \n Calories: \n \n Carbs: \n \n  Fats: ",style: TextStyle(fontSize: 21,color: Colors.white),),
+            Container(width: 200,height: 60,alignment:Alignment.center, decoration: BoxDecoration(border: Border.all(width:1,),borderRadius: BorderRadius.circular(50),color: Colors.deepPurple),child: Text("+ ADD",style: TextStyle(color: Colors.white,fontSize: 21),),)],),)
+          ],),
+        ),
+        SizedBox(height: 15,),
+        Text("2500",style: TextStyle(fontSize: 50,color: Colors.white,fontWeight:FontWeight.w600),
+        ),
+        Text("Total Calories",style: TextStyle(fontSize: 20,color: Colors.deepPurple,fontWeight:FontWeight.w600),
+        )
+        // Flex(direction: Axis.horizontal,
+        // children: [
+        //    Flex(direction:Axis.vertical,
+        //    children:[Container( decoration: BoxDecoration(color: Colors.red),
+
+        //   child: TextField(),),
+        //   Container( decoration: BoxDecoration(color: Colors.pink),
+        //   child: Container(decoration: BoxDecoration(color: Colors.yellow),),)])
+        //     ,
+
+        // ],),
+        
+        ],),
         ),
       );
    

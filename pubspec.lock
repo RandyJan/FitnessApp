@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  bar_graph:
+    dependency: "direct main"
+    description:
+      name: bar_graph
+      sha256: c7ca3e7894cc246ad369b4be61c4edf6ea4ae4b4b198a677c802a6d9bbd2cb23
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   boolean_selector:
     dependency: transitive
     description:
