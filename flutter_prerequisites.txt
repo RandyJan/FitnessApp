@@ -1,0 +1,13 @@
+FLUTTER & DART
+https://docs.flutter.dev/get-started/install/windows/mobile?tab=download - put path bin env
+https://dart.dev/get-dart/archive - put path bin env
+
+ANDROID STUDIO
+https://developer.android.com/studio?gad_source=1&gclid=Cj0KCQjwgJyyBhCGARIsAK8LVLNsSH__ey2KKcilc0hAznNrNAeaxjMy_uRRGMKlE51Hp0bvNRqtjEEaAlsaEALw_wcB&gclsrc=aw.ds
+
+JDK17
+https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+
+-Environment Variables-
+JAVA_HOME/C:\Program Files\Java\jdk-17
+%JAVA_HOME%\bin
